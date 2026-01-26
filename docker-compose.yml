@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  dev-shell:
+    image: ubuntu:24.04
+    container_name: dev-shell
+    tty: true
+    stdin_open: true
+    command: sleep infinity
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    working_dir: /home
+
+    # expose no public ports (not needed)
+    volumes:
+      - dev-shell-data:/home
+
+volumes:
+  dev-shell-data:
