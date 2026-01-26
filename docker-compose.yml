@@ -2,18 +2,15 @@ version: "3.9"
 
 services:
   dev-shell:
-    image: ubuntu:24.04
-    container_name: dev-shell
+    build: .
+    image: custom-clawdbot:latest
+    container_name: dev-clawdbot
     tty: true
     stdin_open: true
-    command: sleep infinity
+    volumes:
+      - dev-clawdbot-data:/app
     environment:
       - DEBIAN_FRONTEND=noninteractive
-    working_dir: /home
-
-    # expose no public ports (not needed)
-    volumes:
-      - dev-shell-data:/home
 
 volumes:
-  dev-shell-data:
+  dev-clawdbot-data:
