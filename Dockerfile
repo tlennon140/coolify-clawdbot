@@ -9,7 +9,7 @@ RUN useradd -m claw
 WORKDIR /app
 
 # Install Clawdbot globally
-RUN npm install -g clawdbot@latest \
+RUN npm install -g clawdbot@latest --ignore-scripts \
     && npm cache clean --force
 
 # Switch to non-root user
