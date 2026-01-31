@@ -1,17 +1,21 @@
-# Use official Node 22 image
-FROM node:22
+FROM node:22-bookworm-slim
 
-# Install pnpm
-RUN corepack enable && npm install -g pnpm
+# Enable corepack (for future use if needed)
+RUN corepack enable
 
-# Create app directory
+# Create non-root user
+RUN useradd -m claw
+
 WORKDIR /app
 
-# Install Clawdbot CLI globally
-RUN pnpm add -g clawdbot@latest
+# Install Clawdbot globally
+RUN npm install -g clawdbot@latest \
+    && npm cache clean --force
 
-# Ensure Clawdbot bin is on PATH (pnpm global bin)
-ENV PATH="$PATH:$(pnpm bin -g)"
+# Switch to non-root user
+USER claw
 
-# Default command is bash so container doesn't exit
+# Ensure global npm bin is on PATH
+ENV PATH="/usr/local/bin:$PATH"
+
 CMD ["bash"]
